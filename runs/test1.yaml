@@ -3,6 +3,7 @@ cluster:
   head: "cpx00003"
   clients: ["cpn00009"]
   osds: ["cpn00001", "cpn00003", "cpn00004"]
+  coscontrollers: ["cpx00003"]
   mons: 
     cpa00001:
       a: "192.168.242.10:6789"
@@ -35,7 +36,7 @@ cluster:
       replication: 2
 benchmarks:
 #  cephfsfio:
-#    monaddr_mountpoint: '192.168.110.51,192.168.110.52,192.168.110.53:/'
+#    monaddr_mountpoint: '192.168.242.10,192.168.242.11,192.168.242.12:/'
 #    time: 10
 #    vol_size: 1024
 #    mode: ['read', 'write']
@@ -60,43 +61,43 @@ benchmarks:
 #    osd_ra: [4096]
 #    cmd_path: '/usr/local/bin/fio'
 #    pool_profile: 'rbd'
-  radosbench:
-    osd_ra: [4096]
-    op_size: 4194304
-    write_only: False
-    time: 120
-    concurrent_ops: 128
-    concurrent_procs: 8
-    use_existing: True
-    pool_profile: replicated
+#  radosbench:
+#    osd_ra: [4096]
+#    op_size: 4194304
+#    write_only: False
+#    time: 120
+#    concurrent_ops: 128
+#    concurrent_procs: 8
+#    use_existing: True
+#    pool_profile: replicated
 #  rbdfio:
 #    time: 10
-#    vol_size: 1024
+#    vol_size: 10240
 #    mode: ['read', 'write']
 #    rwmixread: 50
 #    op_size: [4096]
-#    concurrent_procs: [8]
+#    concurrent_procs: [1]
 #    iodepth: [32]
 #    osd_ra: [4096]
 #    cmd_path: '/usr/local/bin/fio'
 #    pool_profile: 'rbd'
 #    log_avg_msec: 100
-#  cosbench:
-#    obj_size: [64KB]
-#    osd_ra: [4096]
-#    workers: 1
-#    containers_max: 10
-#    objects_max: 100
-#    mode: [write]
-#    cosbench_dir: '/home/cbt/cb/0.4.1.0' 
-#    cosbench_xml_dir: '/home/cbt/cb/xml_dir'
-#    controller: "cadmin"
-#    auth:
-#     config: username=cosbench:operator;password=intel2012;url=http://192.168.110.51:7480/auth/v1.0;retry=9
-#    template: [default]
-#    rampup: 10
-#    runtime: 100
-#    rampdown: 10
-#    containers: ["u(1,100)"]
-#    objects: ["u(1,100)"]
-#    ratio: [100]
+  cosbench:
+    obj_size: [64KB]
+    osd_ra: [4096]
+    workers: 1
+    containers_max: 10
+    objects_max: 100
+    mode: [write]
+    cosbench_dir: '/home/cbt/cb/0.4.2.c3' 
+    cosbench_xml_dir: '/home/cbt/cb/xml_dir'
+    controller: "cpx00003"
+    auth:
+     config: username=cosbench:operator;password=intel2012;url=http://192.168.242.23:7480/auth/v1.0;retry=9
+    template: [default]
+    rampup: 10
+    runtime: 100
+    rampdown: 10
+    containers: ["u(1,100)"]
+    objects: ["u(1,100)"]
+    ratio: [100]
