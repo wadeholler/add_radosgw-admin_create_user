@@ -1,10 +1,8 @@
 cluster:
   user: 'cbt'
   head: "cpx00003"
-  clients: ["cpn00009", "cpn00010", "cpn00011", "cpn00012", "cpn00013", "cpn00014", "cpn00015", "cpn00016"]
-  #clients: ["cpn00009"]
-  osds: ["cpn00001", "cpn00003", "cpn00004", "cpn00005", "cpn00006", "cpn00007", "cpn00008"]
-  #osds: ["cpn00001", "cpn00003", "cpn00004"]
+  clients: ["cpn00009"]
+  osds: ["cpn00001", "cpn00003", "cpn00004"]
   coscontrollers: ["cpx00003"]
   mons: 
     cpa00001:
@@ -21,20 +19,20 @@ cluster:
     cpa00003:
       c: "192.168.242.12"
   rgws: ["cpa00001", "cpa00002", "cpa00003"]
-  osds_per_node: 5
+  osds_per_node: 1
   fs: 'xfs'
   mkfs_opts: '-f -i size=2048 -n size=64k'
   mount_opts: '-o inode64,noatime,logbsize=256k'
   conf_file: '/home/cbt/cbt/runs/radosbench/test1.ceph.conf'
   iterations: 1
   rebuild_every_test: False
-  use_existing: True
+  use_existing: False
   clusterid: "ceph"
   tmp_dir: "/tmp/cbt"
   pool_profiles:
     rbd:
-      pg_size: 2048
-      pgp_size: 2048
+      pg_size: 64
+      pgp_size: 64
       replication: 3
 benchmarks:
 #  cephfsfio:
@@ -69,9 +67,9 @@ benchmarks:
     write_only: False
     time: 120
     concurrent_ops: 128
-    concurrent_procs: 8
+    concurrent_procs: 2
     use_existing: False
-    pool_profile: replicated
+    pool_profile: rbd
 #  rbdfio:
 #    time: 120
 #    vol_size: 10240
