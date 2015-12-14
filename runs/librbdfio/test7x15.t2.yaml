@@ -25,9 +25,9 @@ cluster:
   fs: 'xfs'
   mkfs_opts: '-f -i size=2048 -n size=64k'
   mount_opts: '-o inode64,noatime,logbsize=256k'
-  conf_file: '/home/cbt/cbt/runs/radosbench/test7x15.t2.ceph.conf'
-  iterations: 50
-  rebuild_every_test: True
+  conf_file: '/home/cbt/cbt/runs/librbdfio/test7x15.t2.ceph.conf'
+  iterations: 1
+  rebuild_every_test: False
   use_existing: False
   clusterid: "ceph"
   tmp_dir: "/tmp/cbt"
@@ -50,36 +50,36 @@ benchmarks:
 #    cmd_path: '/usr/local/bin/fio'
 #    pool_profile: 'rbd'
 #    log_avg_msec: 100
-#  librbdfio:
-#    time: 120
-#    vol_size: 10240
-#    #mode: [read, write, randread, randwrite]
-#    mode: [read]
-#    #op_size: [4194304, 2097152, 1048576]
-#    op_size: [8192]
-#    concurrent_procs: [8]
-#    procs_per_volume: 8
-#    iodepth: [64]
-#    osd_ra: [4096]
-#    cmd_path: '/usr/local/bin/fio'
-#    pool_profile: 'rbd'
-  radosbench:
+  librbdfio:
+    time: 120
+    vol_size: 10240
+    #mode: [read, write, randread, randwrite]
+    mode: [read, write]
+    #op_size: [4194304, 2097152, 1048576]
+    op_size: [8192, 8192]
+    concurrent_procs: [8]
+    procs_per_volume: 8
+    iodepth: [128]
     osd_ra: [4096]
-    op_size: 4194304
-    write_only: False
-    time: 1800
-    concurrent_ops: 128
-    concurrent_procs: 1
-    use_existing: False
-    pool_profile: rbd
+    cmd_path: '/usr/local/bin/fio'
+    pool_profile: 'rbd'
+#  radosbench:
+#    osd_ra: [4096]
+#    op_size: 4194304
+#    write_only: False
+#    time: 300
+#    concurrent_ops: 128
+#    concurrent_procs: 1
+#    use_existing: False
+#    pool_profile: rbd
 #  rbdfio:
 #    time: 120
 #    vol_size: 10240
 #    mode: ['read', 'write']
 #    rwmixread: 50
 #    op_size: [8192]
-#    concurrent_procs: [1]
-#    iodepth: [64]
+#    concurrent_procs: [8]
+#    iodepth: [128]
 #    osd_ra: [4096]
 #    cmd_path: '/usr/local/bin/fio'
 #    pool_profile: 'rbd'

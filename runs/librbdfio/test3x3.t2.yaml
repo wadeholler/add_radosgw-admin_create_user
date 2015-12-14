@@ -3,8 +3,8 @@ cluster:
   head: "cpx00003"
   clients: ["cpn00009", "cpn00010", "cpn00011", "cpn00012", "cpn00013", "cpn00014", "cpn00015", "cpn00016"]
   #clients: ["cpn00009"]
-  osds: ["cpn00001", "cpn00003", "cpn00004", "cpn00005", "cpn00006", "cpn00007", "cpn00008"]
-  #osds: ["cpn00001", "cpn00003", "cpn00004"]
+  #osds: ["cpn00001", "cpn00003", "cpn00004", "cpn00005", "cpn00006", "cpn00007", "cpn00008"]
+  osds: ["cpn00001", "cpn00003", "cpn00004"]
   coscontrollers: ["cpx00003"]
   mons: 
     cpa00001:
@@ -21,21 +21,21 @@ cluster:
     cpa00003:
       c: "192.168.242.12"
   rgws: ["cpa00001", "cpa00002", "cpa00003"]
-  osds_per_node: 15
+  osds_per_node: 3
   fs: 'xfs'
   mkfs_opts: '-f -i size=2048 -n size=64k'
   mount_opts: '-o inode64,noatime,logbsize=256k'
-  conf_file: '/home/cbt/cbt/runs/radosbench/test7x15.t2.ceph.conf'
-  iterations: 50
-  rebuild_every_test: True
+  conf_file: '/home/cbt/cbt/runs/librbdfio/test3x3.t2.ceph.conf'
+  iterations: 1
+  rebuild_every_test: False
   use_existing: False
   clusterid: "ceph"
   tmp_dir: "/tmp/cbt"
   pool_profiles:
     rbd:
-      pg_size: 2048
-      pgp_size: 2048
-      replication: 3
+      pg_size: 1024
+      pgp_size: 1024
+      replication: 1
 benchmarks:
 #  cephfsfio:
 #    monaddr_mountpoint: '192.168.242.10,192.168.242.11,192.168.242.12:/'
@@ -50,36 +50,37 @@ benchmarks:
 #    cmd_path: '/usr/local/bin/fio'
 #    pool_profile: 'rbd'
 #    log_avg_msec: 100
-#  librbdfio:
-#    time: 120
-#    vol_size: 10240
-#    #mode: [read, write, randread, randwrite]
-#    mode: [read]
-#    #op_size: [4194304, 2097152, 1048576]
-#    op_size: [8192]
-#    concurrent_procs: [8]
-#    procs_per_volume: 8
-#    iodepth: [64]
-#    osd_ra: [4096]
-#    cmd_path: '/usr/local/bin/fio'
-#    pool_profile: 'rbd'
-  radosbench:
+  librbdfio:
+    time: 120
+    vol_size: 2048
+    #mode: [read, write, randread, randwrite]
+    mode: [read, write]
+    #op_size: [4194304, 2097152, 1048576]
+    op_size: [8192, 8192]
+    concurrent_procs: [8]
+    procs_per_volume: 8
+    iodepth: [128]
     osd_ra: [4096]
-    op_size: 4194304
-    write_only: False
-    time: 1800
-    concurrent_ops: 128
-    concurrent_procs: 1
-    use_existing: False
-    pool_profile: rbd
+    cmd_path: '/usr/local/bin/fio'
+    pool_profile: 'rbd'
+    volumes_per_client: 8
+#  radosbench:
+#    osd_ra: [4096]
+#    op_size: 4194304
+#    write_only: False
+#    time: 300
+#    concurrent_ops: 128
+#    concurrent_procs: 1
+#    use_existing: False
+#    pool_profile: rbd
 #  rbdfio:
 #    time: 120
 #    vol_size: 10240
 #    mode: ['read', 'write']
 #    rwmixread: 50
 #    op_size: [8192]
-#    concurrent_procs: [1]
-#    iodepth: [64]
+#    concurrent_procs: [8]
+#    iodepth: [128]
 #    osd_ra: [4096]
 #    cmd_path: '/usr/local/bin/fio'
 #    pool_profile: 'rbd'
