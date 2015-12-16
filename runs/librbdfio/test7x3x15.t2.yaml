@@ -24,7 +24,7 @@ cluster:
   osds_per_node: 15
   fs: 'xfs'
   mkfs_opts: '-f -i size=2048 -n size=64k'
-  mount_opts: '-o inode64,noatime,logbsize=256k'
+  mount_opts: '-o inode64,noatime,nodiratime,nobarrier,logbsize=256k'
   conf_file: '/home/cbt/cbt/runs/librbdfio/test7x3x15.t2.ceph.conf'
   iterations: 1
   rebuild_every_test: False
@@ -56,14 +56,15 @@ benchmarks:
     #mode: [read, write, randread, randwrite]
     mode: [read, write]
     #op_size: [4194304, 2097152, 1048576]
-    op_size: [8192, 8192]
-    concurrent_procs: [8]
-    procs_per_volume: 8
-    iodepth: [128]
-    osd_ra: [4096]
+    op_size: [65536]
+    concurrent_procs: [1]
+    procs_per_volume: 1
+    iodepth: [256]
+    osd_ra: [1024]
     cmd_path: '/usr/local/bin/fio'
     pool_profile: 'rbd'
     volumes_per_client: 8
+    numjobs: 8
 #  radosbench:
 #    osd_ra: [4096]
 #    op_size: 4194304

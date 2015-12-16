@@ -25,7 +25,7 @@ cluster:
   fs: 'xfs'
   mkfs_opts: '-f -i size=2048 -n size=64k'
   mount_opts: '-o inode64,noatime,logbsize=256k'
-  conf_file: '/home/cbt/cbt/runs/librbdfio/test7x3.t2.ceph.conf'
+  conf_file: '/home/cbt/cbt/runs/librbdfio/test7x3.tIntel.ceph.conf'
   iterations: 1
   rebuild_every_test: False
   use_existing: False
@@ -64,7 +64,7 @@ benchmarks:
     cmd_path: '/usr/local/bin/fio'
     pool_profile: 'rbd'
     volumes_per_client: 8
-    numjobs: 6
+    numjobs: 8
 #  radosbench:
 #    osd_ra: [4096]
 #    op_size: 4194304
