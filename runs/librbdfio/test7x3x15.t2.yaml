@@ -54,17 +54,17 @@ benchmarks:
     time: 120
     vol_size: 2048
     #mode: [read, write, randread, randwrite]
-    mode: [read, write]
+    mode: [randread, randwrite]
     #op_size: [4194304, 2097152, 1048576]
-    op_size: [65536]
+    op_size: [4096]
     concurrent_procs: [1]
     procs_per_volume: 1
     iodepth: [256]
     osd_ra: [1024]
     cmd_path: '/usr/local/bin/fio'
     pool_profile: 'rbd'
-    volumes_per_client: 8
-    numjobs: 8
+    volumes_per_client: 1
+    numjobs: 1
 #  radosbench:
 #    osd_ra: [4096]
 #    op_size: 4194304
