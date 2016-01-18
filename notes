@@ -1,0 +1,16 @@
+# Count the osds per host
+for i in 01 03 04 05 06 07 08 12 13 14 15 16; do ceph osd tree | grep -A 15 cpn000${i} | grep up | wc -l; done
+
+#fix the crush location
+x=01 && for i in $(ssh cpn000${x} ps -ef | grep ceph\-osd | awk '{print $13}'); do ceph osd crush set osd.${i} 0.72769 host=cpn000${x}; done
+
+# stop and start the cluster
+ansible osds -mshell -a"systemctl stop ceph.target"
+ansible mons -mshell -a"systemctl stop ceph.target"
+
+ansible mons -mshell -a"systemctl start ceph.target"
+ansible osds -mshell -a"systemctl start ceph.target"
+
+
+
+
