@@ -11,6 +11,8 @@ ansible mons -mshell -a"systemctl stop ceph.target"
 ansible mons -mshell -a"systemctl start ceph.target"
 ansible osds -mshell -a"systemctl start ceph.target"
 
+#attach to tmux
+tmux attach -t cbtruns
 
 
 # make a runs
@@ -19,4 +21,12 @@ python cbt.py -a /runs/output.randread.32k runs/librbdfio/test7x3x15.t2.yaml 2>&
 # tally throughput
 for z in 0004096 0008192 0016384 0032768 0065536 0131072; do echo run $z;  x=4 && y=${z}; for i in 0 1 2 3 4 5 6; do grep WRITE /runs/output.randwrite.4k-128k.6000/0000000$i/LibrbdFio/osd_ra-00001024/op_size-0${y}/concurrent_procs-012/iodepth-128/randwrite/output.*.cp* | awk '{print $4}' | awk -F '=' '{print $2}' | cut -d'K' -f 1  |paste -sd+ - | bc; done; done
 
+# tally iops
+for z in 0004096 0008192 0016384 0032768 0065536 0131072; do echo run $z; x=4 && y=${z};for i in `seq 0 6`; do grep iops /runs/output.randread.4k-128k.8q/0000000$i/LibrbdFio/osd_ra-00001024/op_size-0${y}/concurrent_procs-012/iodepth-008/randwrite/output.*.cpn* |awk '{print $5}' | awk -F'=' '{print $2}' | awk -F, '{print $1}'| paste -sd+ - | bc; done; done
+
+#get Mean
+for z in 0004096 0008192 0016384 0032768 0065536 0131072; do echo run $z; x=4 && y=${z};for i in `seq 0 6`; do R -q -e "x <- read.csv('/runs/output.randread.${x}k-128k.8q/0000000${i}/LibrbdFio/osd_ra-00001024/op_size-0${y}/concurrent_procs-012/iodepth-008/randread/output.0_lat.log.cpn00009', header = F); summary(x); sd(x[ , 2])" ; done | grep Mean | awk '{print $6}'; done
+
+#get stddev
+for z in 0004096 0008192 0016384 0032768 0065536 0131072; do echo run $z;  x=4 && y=${z};for i in `seq 0 6`; do R -q -e "x <- read.csv('/runs/output.randread.${x}k-128k.8q/0000000${i}/LibrbdFio/osd_ra-00001024/op_size-0${y}/concurrent_procs-012/iodepth-008/randread/output.0_lat.log.cpn00009', header = F); summary(x); sd(x[ , 2])" ; done | grep '^\[' | awk '{print $2}'; done
 
